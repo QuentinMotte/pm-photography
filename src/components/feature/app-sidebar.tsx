@@ -1,15 +1,26 @@
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from "@/components/ui/sidebar";
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
+import { cn } from "@/lib/utils";
+import {
+  ArrowLeft,
+  GalleryHorizontalEnd,
+  Home,
+  Images,
+  MessageCircle,
+  User,
+} from "lucide-react";
+import { NavLink } from "react-router-dom";
+import { ModeToggle } from "../ui/mode-toggle";
 
 const items = [
   {
@@ -18,43 +29,42 @@ const items = [
     icon: Home,
   },
   {
-    title: "Inbox",
-    url: "#",
-    icon: Inbox,
+    title: "Gallery",
+    url: "/gallery",
+    icon: GalleryHorizontalEnd,
   },
   {
-    title: "Calendar",
-    url: "#",
-    icon: Calendar,
-  },
-  {
-    title: "Search",
-    url: "#",
-    icon: Search,
-  },
-  {
-    title: "Settings",
-    url: "#",
-    icon: Settings,
+    title: "Selection",
+    url: "/selection",
+    icon: Images,
   },
 ];
 
 export function AppSidebar() {
+  const { toggleSidebar, state: sidebarState } = useSidebar();
+
   return (
-    <Sidebar>
+    <Sidebar variant="inset" collapsible="icon">
       <SidebarHeader />
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Application</SidebarGroupLabel>
           <SidebarGroupContent>
+            <SidebarMenuButton onClick={toggleSidebar} isActive>
+              <ArrowLeft
+                className={`transition-transform text-lg duration-200 ${
+                  sidebarState === "collapsed" ? "rotate-180" : ""
+                }`}
+              />
+              <span>Pm's Photo</span>
+            </SidebarMenuButton>
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <a href={item.url}>
+                  <SidebarMenuButton asChild isActive>
+                    <NavLink to={item.url}>
                       <item.icon />
                       <span>{item.title}</span>
-                    </a>
+                    </NavLink>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
@@ -62,6 +72,34 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+      <SidebarFooter>
+        <div
+          className={cn(
+            "items-center gap-2",
+            sidebarState === "collapsed"
+              ? "flex flex-col"
+              : "flex items-center gap-2"
+          )}
+        >
+          <SidebarMenuButton variant={"outline"} asChild>
+            <ModeToggle />
+          </SidebarMenuButton>
+          <SidebarMenuButton
+            className="w-9 flex items-center justify-center"
+            variant="outline"
+          >
+            <MessageCircle />
+          </SidebarMenuButton>
+          <SidebarMenuButton
+            className="flex-1"
+            variant={"outline"}
+            onClick={toggleSidebar}
+          >
+            <User />
+            <span>Login</span>
+          </SidebarMenuButton>
+        </div>
+      </SidebarFooter>
     </Sidebar>
   );
 }
