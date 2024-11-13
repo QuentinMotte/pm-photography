@@ -2,13 +2,13 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
 import { queryClient } from "./config";
-import { AppLayout } from "./Layout";
+import Layout from "./Layout/layout";
 import { Home } from "./pages";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <AppLayout />,
+    element: <Layout />,
     children: [
       {
         index: true,
