@@ -1,0 +1,28 @@
+---
+type NavigationItem = {
+  name: string;
+  href: string;
+};
+
+const navigation: NavigationItem[] = [
+  { name: "Home", href: "/" },
+  { name: "Gallery", href: "/gallery" },
+  { name: "Selection", href: "/Selection" },
+  { name: "About", href: "/about" },
+  { name: "Contact", href: "/contact" },
+];
+---
+
+<header>
+  <nav>
+    <ul>
+      {
+        navigation.map((item) => (
+          <li>
+            <a href={item.href}>{item.name}</a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+</header>

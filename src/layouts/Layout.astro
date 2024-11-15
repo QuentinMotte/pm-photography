@@ -1,33 +1,38 @@
 ---
+import Footer from "@/components/global/Footer.astro";
+import Header from "@/components/global/Header.astro";
+
 interface Props {
   title: string;
 }
 
 const { title } = Astro.props;
-const getThemePreference = () => {
-  if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
-    return localStorage.getItem("theme");
-  }
-  return window.matchMedia("(prefers-color-scheme: dark)").matches
-    ? "dark"
-    : "light";
-};
-const isDark = getThemePreference() === "dark";
-document.documentElement.classList[isDark ? "add" : "remove"]("dark");
-
-if (typeof localStorage !== "undefined") {
-  const observer = new MutationObserver(() => {
-    const isDark = document.documentElement.classList.contains("dark");
-    localStorage.setItem("theme", isDark ? "dark" : "light");
-  });
-  observer.observe(document.documentElement, {
-    attributes: true,
-    attributeFilter: ["class"],
-  });
-}
 ---
 
-<!doctype html>
+<script is:inline>
+  const getThemePreference = () => {
+    if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
+      return localStorage.getItem("theme");
+    }
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
+  };
+  const isDark = getThemePreference() === "dark";
+  document.documentElement.classList[isDark ? "add" : "remove"]("dark");
+
+  if (typeof localStorage !== "undefined") {
+    const observer = new MutationObserver(() => {
+      const isDark = document.documentElement.classList.contains("dark");
+      localStorage.setItem("theme", isDark ? "dark" : "light");
+    });
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+  }
+</script>
+
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -38,102 +43,16 @@ if (typeof localStorage !== "undefined") {
     <title>{title}</title>
   </head>
   <body>
+    <Header />
     <slot />
+    <Footer />
   </body>
 </html>
 <style is:global>
-  :root {
-    --accent: 136, 58, 234;
-    --accent-light: 224, 204, 250;
-    --accent-dark: 49, 10, 101;
-    --accent-gradient: linear-gradient(
-      45deg,
-      rgb(var(--accent)),
-      rgb(var(--accent-light)) 30%,
-      white 60%
-    );
-  }
-
-  [data-theme="light"] {
-    --bg-1: #fbfefc;
-    --bg-2: #f4fbf6;
-    --i-component-1: #e6f6eb;
-    --i-component-2: #d6f1df;
-    --i-component-3: #c4e8d1;
-    --border-1: #adddc0;
-    --border-2: #8eceaa;
-    --border-3: #5bb98b;
-    --primary-1: #30a46c;
-    --primary-2: #2b9a66;
-    --text-1: #218358;
-    --text-2: #193b2d;
-    --secondary-bg-1: #fcfcfc;
-    --secondary-bg-2: #f9f9f9;
-    --secondary-i-component-1: #f0f0f0;
-    --secondary-i-component-2: #e8e8e8;
-    --secondary-i-component-3: #e0e0e0;
-    --secondary-border-1: #d9d9d9;
-    --secondary-border-2: #cecece;
-    --secondary-border-3: #bbbbbb;
-    --secondary-primary-1: #8d8d8d;
-    --secondary-primary-2: #838383;
-    --secondary-text-1: #646464;
-    --secondary-text-2: #202020;
-    --shadow-1: rgba(0, 0, 0, 0.05);
-    --shadow-2: rgba(0, 0, 0, 0.1);
-    --shadow-3: rgba(0, 0, 0, 0.15);
-    --shadow-4: rgba(0, 0, 0, 0.2);
-    --shadow-5: rgba(0, 0, 0, 0.3);
-    --shadow-6: rgba(0, 0, 0, 0.4);
-    --shadow-7: rgba(0, 0, 0, 0.5);
-    --shadow-8: rgba(0, 0, 0, 0.6);
-    --shadow-9: rgba(0, 0, 0, 0.7);
-    --shadow-10: rgba(0, 0, 0, 0.8);
-    --shadow-11: rgba(0, 0, 0, 0.9);
-    --shadow-12: rgba(0, 0, 0, 0.95);
-  }
-
-  [data-theme="dark"] {
-    --bg-1: #0e1512;
-    --bg-2: #121b17;
-    --i-component-1: #132d21;
-    --i-component-2: #113b29;
-    --i-component-3: #174933;
-    --border-1: #20573e;
-    --border-2: #28684a;
-    --border-3: #2f7c57;
-    --primary-1: #30a46c;
-    --primary-2: #33b074;
-    --text-1: #3dd68c;
-    --text-2: #b1f1cb;
-    --secondary-bg-1: #111111;
-    --secondary-bg-2: #191919;
-    --secondary-i-component-1: #222222;
-    --secondary-i-component-2: #2a2a2a;
-    --secondary-i-component-3: #313131;
-    --secondary-border-1: #3a3a3a;
-    --secondary-border-2: #484848;
-    --secondary-border-3: #606060;
-    --secondary-primary-1: #6e6e6e;
-    --secondary-primary-2: #7b7b7b;
-    --secondary-text-1: #b4b4b4;
-    --secondary-text-2: #eeeeee;
-    --shadow-1: rgba(255, 255, 255, 0.05);
-    --shadow-2: rgba(255, 255, 255, 0.1);
-    --shadow-3: rgba(255, 255, 255, 0.15);
-    --shadow-4: rgba(255, 255, 255, 0.2);
-    --shadow-5: rgba(255, 255, 255, 0.3);
-    --shadow-6: rgba(255, 255, 255, 0.4);
-    --shadow-7: rgba(255, 255, 255, 0.5);
-    --shadow-8: rgba(255, 255, 255, 0.6);
-    --shadow-9: rgba(255, 255, 255, 0.7);
-    --shadow-10: rgba(255, 255, 255, 0.8);
-    --shadow-11: rgba(255, 255, 255, 0.9);
-    --shadow-12: rgba(255, 255, 255, 0.95);
-  }
   html {
     font-family: system-ui, sans-serif;
-    background: #13151a;
+    background: var(--bg-1);
+    color: var(--text-1);
   }
   code {
     font-family:
@@ -145,5 +64,15 @@ if (typeof localStorage !== "undefined") {
       Bitstream Vera Sans Mono,
       Courier New,
       monospace;
+  }
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  a {
+    color: var(--accent-1);
+    text-decoration: none;
   }
 </style>

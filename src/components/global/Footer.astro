@@ -1,0 +1,13 @@
+---
+const date = new Date().getFullYear();
+---
+
+<footer>
+  <div>
+    <p x-data="{ year: new Date().getFullYear() }">
+      ©
+      <span x-text="year">{date}</span>
+      All rights reserved.
+    </p>
+  </div>
+</footer>
