@@ -44,11 +44,18 @@ const { title } = Astro.props;
   </head>
   <body>
     <Header />
-    <slot />
+    <main>
+      <slot />
+    </main>
     <Footer />
   </body>
 </html>
 <style is:global>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
   html {
     font-family: system-ui, sans-serif;
     background: var(--bg-1);
@@ -66,6 +73,10 @@ const { title } = Astro.props;
       monospace;
   }
 
+  body {
+    min-height: 100vh;
+  }
+
   ul {
     list-style-type: none;
     padding: 0;
@@ -74,5 +85,15 @@ const { title } = Astro.props;
   a {
     color: var(--accent-1);
     text-decoration: none;
+  }
+
+  main {
+    margin: 0 auto;
+    padding: 1rem;
+    width: 1200px;
+    max-width: calc(100% - 2rem);
+    color: white;
+    font-size: 20px;
+    line-height: 1.6;
   }
 </style>

@@ -5,8 +5,8 @@ type NavigationItem = {
 };
 
 const navigation: NavigationItem[] = [
-  { name: "Home", href: "/" },
-  { name: "Gallery", href: "/gallery" },
+  { name: "Home", href: "/pm-photography" },
+  { name: "Gallery", href: "/pm-photography/gallery" },
   { name: "Selection", href: "/Selection" },
   { name: "About", href: "/about" },
   { name: "Contact", href: "/contact" },
@@ -14,6 +14,7 @@ const navigation: NavigationItem[] = [
 ---
 
 <header>
+  <h1>PM Photography</h1>
   <nav>
     <ul>
       {
@@ -26,3 +27,62 @@ const navigation: NavigationItem[] = [
     </ul>
   </nav>
 </header>
+
+<style>
+  header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: 1rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background: var(--bg-2);
+  }
+
+  h1 {
+    font-size: 2rem;
+    font-weight: 300;
+    margin: 0;
+  }
+
+  nav {
+    height: 100%;
+    ul {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      margin: 0;
+
+      li {
+        display: flex;
+        list-style: none;
+        margin: 0;
+        align-items: baseline;
+      }
+    }
+
+    a {
+      color: var(--text-2);
+      font-weight: 300;
+      border-bottom: 1px solid transparent;
+
+      &::after {
+        content: " ";
+        display: block;
+        width: 0rem;
+        background-image: none;
+        height: 2px;
+        transition: 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        background-size: 400%;
+        background-position: 100%;
+      }
+
+      &:hover {
+        &::after {
+          width: 80%;
+          background-image: var(--accent-gradient);
+          background-position: 0;
+        }
+      }
+    }
+  }
+</style>
